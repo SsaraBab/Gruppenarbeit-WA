@@ -36,3 +36,19 @@ any(Interesse_Mathe > 7) ## Kontrolle, ob Rundung korrekt durchgefuehrt wurde
 
 ## ID für ID-Spalte anlegen
 ID <- c(1:100)
+
+## Interesse an Programmieren 
+
+Interesse_Programmieren0 <- sample(1:7, size = 100, replace = TRUE) ## zunaechst Vektor aus diskreter 
+## Gleichverteilung ziehen, noch ohne Zusammenhang mit Studienfach
+Interesse_Programmieren_Zushang <- function(x){ # Funktion, um Interessenvektor in Abhaengigkeit vom
+  ## Studienfach zu vervielfaeltigen
+  ifelse(Studienfach == "Informatik", x*1.5, x)
+  ifelse(Studienfach == "Data Science", x*1.2, x)
+}
+
+Interesse_Programmieren1 <- Interesse_Programmieren_Zushang(Interesse_Programmieren0) # Funktion anwenden
+Interesse_Programmieren2 <- signif(Interesse_Programmieren1, digits = 1) # Vektor auf 1 Ziffer runden
+Interesse_Programmieren <- abrunden(Interesse_Programmieren2) # Eintraege groesser als 7 auf 7 abrunden
+
+any(Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Eintraege auf 7 begrenzt hat

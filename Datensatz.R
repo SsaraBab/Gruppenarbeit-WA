@@ -1,9 +1,20 @@
 ## Part 1 der Aufgabe
 
+## ID fuer ID-Spalte anlegen
+ID <- c(1:100)
+
+
 
 ## Alter simulieren
 Alter.Normalverteilt <- rnorm(n=100,mean=25,sd=2) #Normalverteiltes Alter (Erwartungswert 25, Stand.abw. 2) mit Nachkommastellen 
-Alter <- signif(Alter.Normalverteilt, digits = 2) #Rundung des ALters
+Alter <- signif(Alter.Normalverteilt, digits = 2) #Rundung des Alters
+
+## Also ist 'Alter' letztendlich Vektor f¸r die Spalte.
+
+Daten <- data.frame(ID = ID, Alter = Alter) ## erster Dataframe mit den Infos zu ID und Alter.
+
+
+
 
 ## Studienfach simulieren
 
@@ -12,43 +23,69 @@ Studienfach <- sample(Faecher, size = 100, replace = TRUE, prob = c(0.3,0.3,0.1,
 ## Studienfaecher zufaellig ausgewahlt aus dem Vektor, wobei Statistik & Data Science Wkeit von 0.3 haben,
 ## Mathe von 0.1 und Informatik von 0.2
 
+## Also ist 'Studienfach' letztendlich Vektor f¸r die Spalte.
+
+Daten <- data.frame(ID = ID, Alter = Alter, Studienfach = Studienfach) ## Dataframe mit ergaenzten Daten zum Studienfach.
+
+
+
+
 ## Interesse an Mathematik simulieren
 
 Interesse_Mathe0 <- sample(1:7, size = 100, replace = TRUE) ## zunaechst Vektor aus diskreter Gleichvert. erzeugen
 ## dabei noch kein Zusammenhang mit Studienfach
-Interesse_Mathe_Zushang <- function(x){ ## Funktion, um das Interesse an Mathematik mit dem Studienfach in 
-  ## Zusammenhang zu bringen
-  ifelse(Studienfach == "Mathe", x + 2, x) # bei Studienfach Mathe
-  ## 2 Punkte addieren
-  ifelse(Studienfach == "Statistik"| 
-           Studienfach == "Data Science", x + 1, x)
-  ## bei Studienfach Statistik oder Data Science 1 Punkt addieren, sonst gleich lassen
-}
-Interesse_Mathe1 <- Interesse_Mathe_Zushang(Interesse_Mathe0) # Funktion aufrufen, um Zusammenhang
-## zu Studienfach zu erzeugen
+
+Daten <- data.frame(ID = ID, Alter = Alter, Studienfach = Studienfach, Interesse_Mathe = Interesse_Mathe0)
+## Vektor ohne Zusammenhang zun‰chst zum Daraframe hinzufuegen, um ihn dort zu bearbeiten.
+
+Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Mathe", Daten$Interesse_Mathe + 2, Daten$Interesse_Mathe)
+## Interesse plus 2 falls das Studienfach Mathe
+Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Statistik", Daten$Interesse_Mathe + 1, Daten$Interesse_Mathe)
+Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Data Science", Daten$Interesse_Mathe + 1, Daten$Interesse_Mathe)
+## Interesse plus 1 falls das Studienfach Statistik oder Data Science.
+
 abrunden <- function(x){## Funktion zum Abrunden: falls Addition zu Punktzahl hoeher als 7 
   ##gefuehrt hat, Wert fuer Interesse auf 7 reduzieren
   ifelse(x > 7, x == 7, x)
 }
-Interesse_Mathe <- abrunden(Interesse_Mathe1) ## abrunden durchfuehren
+Daten$Interesse_Mathe <- abrunden(Daten$Interesse_Mathe) ## abrunden durchfuehren
 
-any(Interesse_Mathe > 7) ## Kontrolle, ob Rundung korrekt durchgefuehrt wurde
+any(Daten$Interesse_Mathe > 7) ## Kontrolle, ob Rundung korrekt durchgefuehrt wurde
 
-## ID f√ºr ID-Spalte anlegen
-ID <- c(1:100)
+## Somit ist die SPalte fuer Interesse an Mathe erledigt.
+
+
+
 
 ## Interesse an Programmieren 
 
-Interesse_Programmieren0 <- sample(1:7, size = 100, replace = TRUE) ## zunaechst Vektor aus diskreter 
+Interesse_Programmieren <- sample(1:7, size = 100, replace = TRUE) ## zunaechst Vektor aus diskreter 
 ## Gleichverteilung ziehen, noch ohne Zusammenhang mit Studienfach
-Interesse_Programmieren_Zushang <- function(x){ # Funktion, um Interessenvektor in Abhaengigkeit vom
-  ## Studienfach zu vervielfaeltigen
-  ifelse(Studienfach == "Informatik", x*1.5, x)
-  ifelse(Studienfach == "Data Science", x*1.2, x)
-}
 
-Interesse_Programmieren1 <- Interesse_Programmieren_Zushang(Interesse_Programmieren0) # Funktion anwenden
-Interesse_Programmieren2 <- signif(Interesse_Programmieren1, digits = 1) # Vektor auf 1 Ziffer runden
-Interesse_Programmieren <- abrunden(Interesse_Programmieren2) # Eintraege groesser als 7 auf 7 abrunden
+Daten <- data.frame(ID = ID, Alter = Alter, Studienfach = Studienfach, Interesse_Mathe = Interesse_Mathe0,
+                    Interesse_Programmieren = Interesse_Programmieren)
+## Spalte fuer Interesse am Programmieren hinzufuegen, um direkt im Data Frame weiterzuarbeiten.
 
-any(Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Eintraege auf 7 begrenzt hat
+Daten$Interesse_Programmieren <- ifelse(Daten$Studienfach == "Informatik", 
+                                        Daten$Interesse_Programmieren*1.5, Daten$Interesse_Programmieren)
+## Interesse Mal 1.5 falls das Studienfach Informatik.
+Daten$Interesse_Programmieren <- ifelse(Daten$Studienfach == "Data Science", 
+                                        Daten$Interesse_Programmieren*1.2, Daten$Interesse_Programmieren)
+## Interesse Mal 1.2 falls das Studienfach Data Science.
+
+
+
+Daten$Interesse_Programmieren <- signif(Daten$Interesse_Programmieren, digits = 1) # Vektor auf 1 Ziffer runden
+
+Daten$Interesse_Programmieren <- abrunden(Daten$Interesse_Programmieren)
+# Eintraege groesser als 7 auf 7 abrunden
+
+any(Daten$Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Eintraege auf 7 begrenzt hat
+
+
+
+
+
+
+
+  

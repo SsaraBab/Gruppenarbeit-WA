@@ -119,14 +119,10 @@ Daten$Mathe_LK <- sample(c("nein","ja"), size = 100, replace = TRUE)
 
 Daten
 
-## Ich dachte, man sollte das noch als factor kodieren, kriege es aber nicht ans Laufen:
-Daten$Mathe_LK <- as.factor(Daten$Mathe_LK, levels = c("nein","ja"), labels = c("nein", "ja"))
-##Fehler in as.factor(Daten$Mathe_LK, levels = c("nein", "ja"), labels = c("nein",  : 
-##unbenutzte Argumente (levels = c("nein", "ja"), labels = c("nein", "ja"))
-                                                                        
+## Daten als factor codieren:
+Daten$Mathe_LK <- factor(Daten$Mathe_LK, levels = c("nein", "ja"), labels = c("Nein", "Ja"))
 
-
-
-
+Daten$Mathe_LK ## Ueberpruefung ob Codierung als factor geklappt hat
+str(Daten) ## Ueberpruefung ob Codierung als factor geklappt hat 
 
   

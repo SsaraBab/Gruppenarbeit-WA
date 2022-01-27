@@ -47,11 +47,19 @@ Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Data Science", Daten$Inter
 
 abrunden <- function(x){## Funktion zum Abrunden: falls Addition zu Punktzahl hoeher als 7 
   ##gefuehrt hat, Wert fuer Interesse auf 7 reduzieren
-  ifelse(x > 7, x == 7, x)
+  i <- 1
+  while(i <= 100){
+    if(x[i] > 7) x[i] <- 7
+    else x[i] <- x[i]
+    i <- i + 1
+  }
+  x
 }
+
 Daten$Interesse_Mathe <- abrunden(Daten$Interesse_Mathe) ## abrunden durchfuehren
 
 any(Daten$Interesse_Mathe > 7) ## Kontrolle, ob Rundung korrekt durchgefuehrt wurde
+any(Daten$Interesse_Mathe < 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
 
 ## Somit ist die SPalte fuer Interesse an Mathe erledigt.
 
@@ -77,27 +85,13 @@ Daten$Interesse_Programmieren <- abrunden(Daten$Interesse_Programmieren)
 # Eintraege groesser als 7 auf 7 abrunden
 
 any(Daten$Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Eintraege auf 7 begrenzt hat
+any(Daten$Interesse_Programmieren < 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
 
 ## Versuch, den Interessenvektor Programmieren anders abzurunden, gleiches Problem: 
-## erst Werte groesser 7 auf 6.5 setzen, dann die signif Funktion
-
-Daten$Interesse_Programmieren <- ifelse(Daten$Interesse_Programmieren > 7, 
-                                        Daten$Interesse_Programmieren == 6.5, Daten$Interesse_Programmieren)
-Daten$Interesse_Programmieren <- signif(Daten$Interesse_Programmieren, digits = 1) # Vektor auf 1 Ziffer runden
-
-## Mir ist der Fehler ein absolutes Raetsel, auch googeln half nicht. Daher nun ein dirty 
-## workaround, weil ich mir nicht anders zu helfen weiss: da wir ja wissen, dass entweder die 
-## Funktion abrunden oder das ifelse fuer Werte groesser 7 ausschliesslich die betreffenden Werte auf 0 reduziert
-## haben, ersetzen wir nun alle Nullen durch "7": 
-Daten$Interesse_Mathe <- ifelse(Daten$Interesse_Mathe == 0, 
-                                Daten$Interesse_Mathe == 7, Daten$Interesse_Mathe)
-Daten$Interesse_Programmieren <- ifelse(Daten$Interesse_Programmieren == 0, 
-                                        Daten$Interesse_Programmieren == 7,
-                                        Daten$Interesse_Programmieren)
-## Bei Mathe funktioniert es, bei Programmieren leider nicht. 
-## Obwohl die Zeilen fuer mich identisch aussehen!
 
 Daten
+
+
 
 ## Fuer Variable Mathe_LK: 
 ## aus 0 und 1 ziehen mit Wahrscheinlichkeiten basierend auf dem Studienfach, funktioniert nicht:

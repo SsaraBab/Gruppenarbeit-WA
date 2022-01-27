@@ -10,7 +10,7 @@ set.seed(2022)
 Alter.Normalverteilt <- rnorm(n=100,mean=25,sd=2) #Normalverteiltes Alter (Erwartungswert 25, Stand.abw. 2) mit Nachkommastellen 
 Alter <- signif(Alter.Normalverteilt, digits = 2) #Rundung des Alters
 
-## Also ist 'Alter' letztendlich Vektor f?r die Spalte.
+## Also ist 'Alter' letztendlich Vektor fuer die Spalte.
 
 Daten <- data.frame(ID = ID, Alter = Alter) ## erster Dataframe mit den Infos zu ID und Alter.
 
@@ -24,7 +24,7 @@ Studienfach <- sample(Faecher, size = 100, replace = TRUE, prob = c(0.3,0.3,0.1,
 ## Studienfaecher zufaellig ausgewahlt aus dem Vektor, wobei Statistik & Data Science Wkeit von 0.3 haben,
 ## Mathe von 0.1 und Informatik von 0.2
 
-## Also ist 'Studienfach' letztendlich Vektor f?r die Spalte.
+## Also ist 'Studienfach' letztendlich Vektor fuer die Spalte.
 
 Daten <- data.frame(ID = ID, Alter = Alter, Studienfach = Studienfach) ## Dataframe mit ergaenzten Daten zum Studienfach.
 
@@ -37,7 +37,7 @@ Interesse_Mathe0 <- sample(1:7, size = 100, replace = TRUE) ## zunaechst Vektor 
 ## dabei noch kein Zusammenhang mit Studienfach
 
 Daten <- data.frame(ID = ID, Alter = Alter, Studienfach = Studienfach, Interesse_Mathe = Interesse_Mathe0)
-## Vektor ohne Zusammenhang zun?chst zum Daraframe hinzufuegen, um ihn dort zu bearbeiten.
+## Vektor ohne Zusammenhang zunaechst zum Daraframe hinzufuegen, um ihn dort zu bearbeiten.
 
 Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Mathe", Daten$Interesse_Mathe + 2, Daten$Interesse_Mathe)
 ## Interesse plus 2 falls das Studienfach Mathe
@@ -48,7 +48,7 @@ Daten$Interesse_Mathe <- ifelse(Daten$Studienfach == "Data Science", Daten$Inter
 abrunden <- function(x){## Funktion zum Abrunden: falls Addition zu Punktzahl hoeher als 7 
   ##gefuehrt hat, Wert fuer Interesse auf 7 reduzieren
   i <- 1
-  while(i <= 100){
+  while(i <= length(x)){
     if(x[i] > 7) x[i] <- 7
     else x[i] <- x[i]
     i <- i + 1
@@ -59,9 +59,9 @@ abrunden <- function(x){## Funktion zum Abrunden: falls Addition zu Punktzahl ho
 Daten$Interesse_Mathe <- abrunden(Daten$Interesse_Mathe) ## abrunden durchfuehren
 
 any(Daten$Interesse_Mathe > 7) ## Kontrolle, ob Rundung korrekt durchgefuehrt wurde
-any(Daten$Interesse_Mathe < 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
+any(Daten$Interesse_Mathe <= 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
 
-## Somit ist die SPalte fuer Interesse an Mathe erledigt.
+## Somit ist die Spalte fuer Interesse an Mathe erledigt.
 
 ## Interesse an Programmieren 
 
@@ -85,13 +85,7 @@ Daten$Interesse_Programmieren <- abrunden(Daten$Interesse_Programmieren)
 # Eintraege groesser als 7 auf 7 abrunden
 
 any(Daten$Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Eintraege auf 7 begrenzt hat
-any(Daten$Interesse_Programmieren < 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
-
-## Versuch, den Interessenvektor Programmieren anders abzurunden, gleiches Problem: 
-
-Daten
-
-
+any(Daten$Interesse_Programmieren <= 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
 
 ## Fuer Variable Mathe_LK: 
 ## aus 0 und 1 ziehen mit Wahrscheinlichkeiten basierend auf dem Studienfach, funktioniert nicht:
@@ -104,10 +98,22 @@ Daten$Mathe_LK <- sample(c(0,1), size = 100, replace = TRUE,
                                                       ifelse(Daten$Studienfach == "Mathe", 0.8, 0.4))))
 ## Wkeit fuer Mathe LK bei Fach Mathe ist 0.8, bei allem anderen, also Informatik, bei 0.4
 
+
 ##Fehler in sample.int(length(x), size, replace, prob) : 
 ##falsche Anzahl von Wahrscheinlichkeiten
 
-## Falls wir es nicht ans Laufen kriegen dann eben ohne Zusammenhang:
+## Anderer Versuch:
+
+Daten$Mathe_LK <- sample(c(0,1), size = 100, replace = TRUE, 
+                         prob = ifelse(Daten$Studienfach == "Statistik", 0.3, 
+                                       ## Wkeit fuer Mathe LK bei Fach Statistik ist 0.6
+                                       ifelse(Daten$Studienfach == "Data Science", 0.1, 
+                                              ## Wkeit bei Data Science 0.5
+                                              ifelse(Daten$Studienfach == "Mathe", 0.5, 0.1))))
+## Wkeit bei Studienfach Mathe 0.5, Rest, also Informatik 0.1, damit Summe = 1 ergibt
+## Jedoch leider selbe Fehlermeldung
+
+## Falls wir es nicht ans Laufen kriegen, dann eben ohne Zusammenhang:
 
 Daten$Mathe_LK <- sample(c("nein","ja"), size = 100, replace = TRUE)
 
@@ -119,4 +125,20 @@ Daten$Mathe_LK <- factor(Daten$Mathe_LK, levels = c("nein", "ja"), labels = c("N
 Daten$Mathe_LK ## Ueberpruefung ob Codierung als factor geklappt hat
 str(Daten) ## Ueberpruefung ob Codierung als factor geklappt hat 
 
-  
+## Zuletzt erstellen Datensatz als csv Datei speichern:
+write.csv(Daten, file = "Datensatz.csv") ## Hier bewusst keine weiteren Optionen wie header = TRUE,
+## col.names = TRUE o. ae. gesetzt, da es sonst zur Fehlermeldung kommt:
+
+## weil eben eine Fehlermeldung kam, aber eine csv-Datei erstellt wurde:
+# Warnmeldung:
+#   In write.csv(Daten, file = "Datensatz.csv", col.names = TRUE, row.names = FALSE) :
+#   Versuch ignoriert 'col.names' zu setzen
+## Warnmeldung kommt auch, wenn ich zusaetzlich row.names = TRUE setze. 
+
+## Einlesen der erstellten csv-Datei zur Kontrolle, ob alles korrekt gespeichert wurde,
+
+Daten2 <- read.csv(file = "Datensatz.csv")
+
+Daten2                                
+str(Daten2)
+## Sieht alles aus wie beabsichtigt.

@@ -88,31 +88,6 @@ any(Daten$Interesse_Programmieren > 7) ## Kontrolle, ob Funktion korrekt die Ein
 any(Daten$Interesse_Programmieren <= 0) ## Kontrolle, ob Funktion korrekt die Eintraege auf groesser 0 begrenzt hat
 
 ## Fuer Variable Mathe_LK: 
-## aus 0 und 1 ziehen mit Wahrscheinlichkeiten basierend auf dem Studienfach, funktioniert nicht:
-
-Daten$Mathe_LK <- sample(c(0,1), size = 100, replace = TRUE, 
-                         prob = ifelse(Daten$Studienfach == "Statistik", 0.6, 
-                                       ## Wkeit fuer Mathe LK bei Fach Statistik ist 0.6
-                                            ifelse(Daten$Studienfach == "Data Science", 0.5, 
-                                                   ## Wkeit bei Data Science 0.5
-                                                      ifelse(Daten$Studienfach == "Mathe", 0.8, 0.4))))
-## Wkeit fuer Mathe LK bei Fach Mathe ist 0.8, bei allem anderen, also Informatik, bei 0.4
-
-
-##Fehler in sample.int(length(x), size, replace, prob) : 
-##falsche Anzahl von Wahrscheinlichkeiten
-
-## Anderer Versuch:
-
-Daten$Mathe_LK <- sample(c(0,1), size = 100, replace = TRUE, 
-                         prob = ifelse(Daten$Studienfach == "Statistik", 0.3, 
-                                       ## Wkeit fuer Mathe LK bei Fach Statistik ist 0.6
-                                       ifelse(Daten$Studienfach == "Data Science", 0.1, 
-                                              ## Wkeit bei Data Science 0.5
-                                              ifelse(Daten$Studienfach == "Mathe", 0.5, 0.1))))
-## Wkeit bei Studienfach Mathe 0.5, Rest, also Informatik 0.1, damit Summe = 1 ergibt
-## Jedoch leider selbe Fehlermeldung
-
 ## Falls wir es nicht ans Laufen kriegen, dann eben ohne Zusammenhang:
 
 Daten$Mathe_LK <- sample(c("nein","ja"), size = 100, replace = TRUE)
@@ -126,7 +101,7 @@ Daten$Mathe_LK ## Ueberpruefung ob Codierung als factor geklappt hat
 str(Daten) ## Ueberpruefung ob Codierung als factor geklappt hat 
 
 ## Zuletzt erstellen Datensatz als csv Datei speichern:
-write.csv(Daten, file = "Datensatz.csv") ## Hier bewusst keine weiteren Optionen wie header = TRUE,
+write.csv(Daten, file = "Datensatz.csv", row.names = FALSE) ## Hier bewusst keine weiteren Optionen wie header = TRUE,
 ## col.names = TRUE o. ae. gesetzt, da es sonst zur Fehlermeldung kommt:
 
 ## weil eben eine Fehlermeldung kam, aber eine csv-Datei erstellt wurde:
@@ -134,6 +109,7 @@ write.csv(Daten, file = "Datensatz.csv") ## Hier bewusst keine weiteren Optionen
 #   In write.csv(Daten, file = "Datensatz.csv", col.names = TRUE, row.names = FALSE) :
 #   Versuch ignoriert 'col.names' zu setzen
 ## Warnmeldung kommt auch, wenn ich zusaetzlich row.names = TRUE setze. 
+## row.names = FALSE scheint irgendwie nicht zu wirken, bei Kontrolle unten stehen welche.
 
 ## Einlesen der erstellten csv-Datei zur Kontrolle, ob alles korrekt gespeichert wurde,
 
@@ -141,4 +117,5 @@ Daten2 <- read.csv(file = "Datensatz.csv")
 
 Daten2                                
 str(Daten2)
-## Sieht alles aus wie beabsichtigt.
+## Sieht alles aus wie beabsichtigt, bis auf die linke Spalte mit den Zeilennummern, aber die 
+## habe ich durch row.names = FALSE oben bei write.csv leider auch nicht weggekriegt.

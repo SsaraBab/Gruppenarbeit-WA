@@ -14,7 +14,31 @@ metrisch <- function(x){ ## Funktion fuer metrische Variablen
   else {x <- x} ## weiss nicht, wie ich R sonst sagen soll, dass R einfach weitermacht
   m <- mean(x) ## berechne das arithmetische Mittel und weise ihm einen Namen zu
   stabw <- sd(x) ## berechne die Standardabweichung und weise ihr einen Namen zu
-  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw,".")
+  med <- median(x) ## berechne den Median und weise ihm einen Namen zu
+  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw,"und der Median ist",med,".")
   ## Gebe die errechneten Werte aus
 return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
+
+## Beispiel zum Ausprobieren:
+metrisch(c(1:100))
+
+
+
+
+## (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
+## für kategoriale Variablen berechnet und ausgibt
+
+kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
+  t <- table(x) ##Erstellung einer Tabelle der absoluten Haeufigkeiten
+  h <- prop.table(t) ##Erstellung einer Tabelle der relaiven Haeufigkeiten
+  h <- round(h, digits = 2) ##Rundung der relativen Haeufigkeiten auf 2 Nachkommastellen
+  Ergebnis <- paste("")
+  ## Gebe die errechneten Werte aus
+  return(Ergebnis) ## letzten Abstand noch korrigieren!
+}
+
+y <- c(rep(c("eins", "zwei", "drei", "vier"), c(1,2,4,1)))
+kategoriell(y)
+
+

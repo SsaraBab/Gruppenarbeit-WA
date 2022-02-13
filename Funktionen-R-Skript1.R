@@ -32,13 +32,63 @@ metrisch(c(1:100))
 kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
   t <- table(x) ##Erstellung einer Tabelle der absoluten Haeufigkeiten
   h <- prop.table(t) ##Erstellung einer Tabelle der relaiven Haeufigkeiten
-  h <- round(h, digits = 2) ##Rundung der relativen Haeufigkeiten auf 2 Nachkommastellen
+  h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
   Ergebnis <- paste("")
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 
+## Beispiel zum Ausprobieren:
 y <- c(rep(c("eins", "zwei", "drei", "vier"), c(1,2,4,1)))
 kategoriell(y)
 
+
+
+## (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## den Zusammenhang zwischen zwei kategorialen Variablen
+## berechnet ausgibt
+
+bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
+  t <- table(x, y) ##Erzeugung von KOntingenztafel
+  h <- prop.table(t, 1) ##Tafel fuer die relativen Haeufigkeiten
+  h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
+  Ergebnis <- paste("")
+  ## Gebe die errechneten Werte aus
+  return(Ergebnis) ## letzten Abstand noch korrigieren!
+}
+
+## Beispiel zum Ausprobieren:
+z <- c(rep(c("male", "female", "nb"), c(2,3,3)))
+bi.kategoriell(y, z)
+
+
+
+
+## (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## den Zusammengang zwischen einer metrischen und einer
+## dichotomen Variablen berechnet und ausgibt
+
+metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable
+  
+  Ergebnis <- paste("")
+  ## Gebe die errechneten Werte aus
+  return(Ergebnis) ## letzten Abstand noch korrigieren!
+}
+
+## Beispiel zum Ausprobieren:
+l <- c(rep(c("male", "female"), 4))
+metrisch.dichotom(y, l)
+
+
+
+## (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
+## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
+
+
+
+
+
+
+## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
+## kategorialen Variablen erstellt
 

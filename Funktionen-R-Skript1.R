@@ -75,7 +75,7 @@ metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dic
   if(!is.numeric(x))
     x <- as.numeric(factor(x))
     
-  e <- cor.test(x,y)    ## berechnet Punktbiserale Korrelation
+  e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
   Ergebnis <- e
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
@@ -91,8 +91,26 @@ metrisch.dichotom(l, m)
 ## (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 
+create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = mittleres
+  
+  if(!is.numeric(x)|!is.numeric(l)|!is.numeric(m))
+    return("Alle Werte müssen numeric sein.")
+  low <- quantile(x,l) 
+  medium <- quantile(x,m)   ## Berechnung der quantile von x
+  high <- quantile(x,1)
+  
+  complete <- ifelse(x <= quantile(x,l), "low", 
+         ifelse(x <= quantile(x,m), "medium","high")) ## Klassifizierung der Werte nach Quantilen, braucht evtl. noch Anpassung um Sinnvoller zu sein.
+  
+  return(c(low,medium,high))
+  # return(complete)           ## für Gewünschte Version auskommentierung ändern
+  
+}
 
-
+## Beispiele zum Ausprobieren:
+q <- 1:100
+create.quantil(q)
+create.quantil(q,0,1/2)
 
 
 

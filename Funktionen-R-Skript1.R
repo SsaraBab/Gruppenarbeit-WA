@@ -11,23 +11,23 @@ metrisch <- function(x){ ## Funktion fuer metrische Variablen
   if(is.factor(x) == TRUE | is.character(x) == TRUE) return("Die Variable muss metrisch sein.") 
   ## Funktion soll zunaechst pruefen, dass x kein factor oder character ist -- 
   ## andere ungeeignete Datentypen bitte hier ergaenzen!
-  else {x <- x} ## weiss nicht, wie ich R sonst sagen soll, dass R einfach weitermacht
   m <- mean(x) ## berechne das arithmetische Mittel und weise ihm einen Namen zu
   stabw <- sd(x) ## berechne die Standardabweichung und weise ihr einen Namen zu
   med <- median(x) ## berechne den Median und weise ihm einen Namen zu
-  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw,"und der Median ist",med,".")
+  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw," und der Median ist ",med,".", sep = "")
   ## Gebe die errechneten Werte aus
-return(Ergebnis) ## letzten Abstand noch korrigieren!
+  return(Ergebnis) 
 }
 
 ## Beispiel zum Ausprobieren:
-metrisch(c(1:100))
+x <- c(1:100)
+metrisch(x)
 
 
 
 
 ## (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
-## für kategoriale Variablen berechnet und ausgibt
+## fÃ¼r kategoriale Variablen berechnet und ausgibt
 
 kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
   t <- table(x) ##Erstellung einer Tabelle der absoluten Haeufigkeiten
@@ -44,7 +44,7 @@ kategoriell(y)
 
 
 
-## (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r
 ## den Zusammenhang zwischen zwei kategorialen Variablen
 ## berechnet ausgibt
 
@@ -64,20 +64,27 @@ bi.kategoriell(y, z)
 
 
 
-## (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken fÃ¼r
 ## den Zusammengang zwischen einer metrischen und einer
 ## dichotomen Variablen berechnet und ausgibt
 
-metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable
-  
-  Ergebnis <- paste("")
+metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable 
+                                     ## x dichotom, y numerisch
+  if(length(x) != length(y)) 
+    return("Die Variablen mÃ¼ssen gleicher LÃ¤nge sein")
+  if(!is.numeric(x))
+    x <- as.numeric(factor(x))
+    
+  e <- cor.test(x,y)    ## berechnet Punktbiserale Korrelation
+  Ergebnis <- e
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 
 ## Beispiel zum Ausprobieren:
+m <- c(1,3,2,4,2,7,12,0)
 l <- c(rep(c("male", "female"), 4))
-metrisch.dichotom(y, l)
+metrisch.dichotom(l, m)
 
 
 

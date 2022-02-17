@@ -27,13 +27,13 @@ metrisch(x)
 
 
 ## (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
-## für kategoriale Variablen berechnet und ausgibt
+## fuer kategoriale Variablen berechnet und ausgibt
 
 kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
   t <- table(x) ##Erstellung einer Tabelle der absoluten Haeufigkeiten
   h <- prop.table(t) ##Erstellung einer Tabelle der relaiven Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  Ergebnis <- paste("")
+  Ergebnis <- h
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
@@ -44,7 +44,7 @@ kategoriell(y)
 
 
 
-## (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## (c) Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer
 ## den Zusammenhang zwischen zwei kategorialen Variablen
 ## berechnet ausgibt
 
@@ -52,7 +52,7 @@ bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
   t <- table(x, y) ##Erzeugung von KOntingenztafel
   h <- prop.table(t, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  Ergebnis <- paste("")
+  Ergebnis <- h
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
@@ -64,14 +64,14 @@ bi.kategoriell(y, z)
 
 
 
-## (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+## (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer
 ## den Zusammengang zwischen einer metrischen und einer
 ## dichotomen Variablen berechnet und ausgibt
 
 metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable 
                                      ## x dichotom, y numerisch
   if(length(x) != length(y)) 
-    return("Die Variablen müssen gleicher Länge sein")
+    return("Die Variablen muessen gleicher Laenge sein")
   if(!is.numeric(x))
     x <- as.numeric(factor(x))
     
@@ -103,7 +103,7 @@ create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = 
          ifelse(x <= quantile(x,m), "medium","high")) ## Klassifizierung der Werte nach Quantilen, braucht evtl. noch Anpassung um Sinnvoller zu sein.
   
   return(c(low,medium,high))
-  # return(complete)           ## für Gewünschte Version auskommentierung ändern
+  # return(complete)           ## fuer Gewuenschte Version auskommentierung aendern
   
 }
 
@@ -116,4 +116,9 @@ create.quantil(q,0,1/2)
 
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt
+
+
+
+
+
 

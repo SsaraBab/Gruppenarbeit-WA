@@ -9,6 +9,7 @@ source("Funktionen-R-Skript2.R") ## ganz zu Anfang die Datei mit den Hilfsfunkti
 
 metrisch <- function(x){ ## Funktion fuer metrische Variablen
   if(is.factor(x) == TRUE | is.character(x) == TRUE) return("Die Variable muss metrisch sein.") 
+  
   ## Funktion soll zunaechst pruefen, dass x kein factor oder character ist -- 
   ## andere ungeeignete Datentypen bitte hier ergaenzen!
   m <- mean(x) ## berechne das arithmetische Mittel und weise ihm einen Namen zu
@@ -16,6 +17,7 @@ metrisch <- function(x){ ## Funktion fuer metrische Variablen
   med <- median(x) ## berechne den Median und weise ihm einen Namen zu
   Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw," und der Median ist ",med,".", sep = "")
   ## Gebe die errechneten Werte aus
+  
   return(Ergebnis) 
 }
 
@@ -35,6 +37,7 @@ kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
   Ergebnis <- h
   ## Gebe die errechneten Werte aus
+  
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 
@@ -49,11 +52,13 @@ kategoriell(y)
 ## berechnet ausgibt
 
 bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
-  t <- table(x, y) ##Erzeugung von KOntingenztafel
-  h <- prop.table(t, 1) ##Tafel fuer die relativen Haeufigkeiten
+  H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
+  h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  Ergebnis <- h
+  hkum <- cumsum(h)
+  Ergebnis <- cbind(h, hkum)
   ## Gebe die errechneten Werte aus
+  
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 
@@ -69,15 +74,16 @@ bi.kategoriell(y, z)
 ## dichotomen Variablen berechnet und ausgibt
 
 metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable 
-                                     ## x dichotom, y numerisch
+  ## x dichotom, y numerisch
   if(length(x) != length(y)) 
     return("Die Variablen muessen gleicher Laenge sein")
   if(!is.numeric(x))
     x <- as.numeric(factor(x))
-    
+  
   e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
   Ergebnis <- e
   ## Gebe die errechneten Werte aus
+  
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 
@@ -94,16 +100,16 @@ metrisch.dichotom(l, m)
 create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = mittleres
   
   if(!is.numeric(x)|!is.numeric(l)|!is.numeric(m))
-    return("Alle Werte müssen numeric sein.")
+    return("Alle Werte mussen numeric sein.")
   low <- quantile(x,l) 
   medium <- quantile(x,m)   ## Berechnung der quantile von x
   high <- quantile(x,1)
   
   complete <- ifelse(x <= quantile(x,l), "low", 
-         ifelse(x <= quantile(x,m), "medium","high")) ## Klassifizierung der Werte nach Quantilen, braucht evtl. noch Anpassung um Sinnvoller zu sein.
+                     ifelse(x <= quantile(x,m), "medium","high")) ## Klassifizierung der Werte nach Quantilen, braucht evtl. noch Anpassung um Sinnvoller zu sein.
   
-  return(c(low,medium,high))
-  # return(complete)           ## fuer Gewuenschte Version auskommentierung aendern
+  # return(c(low,medium,high))
+  return(complete)           ## fuer Gewuenschte Version auskommentierung aendern
   
 }
 
@@ -111,6 +117,41 @@ create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = 
 q <- 1:100
 create.quantil(q)
 create.quantil(q,0,1/2)
+
+
+
+## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
+## kategorialen Variablen erstellt
+
+## install.packages("vcd") ## falls noch nicht installiert, Paket vcd hier installieren
+library(vcd) ## Paket vcd laden
+library(grid) ## wegen Warnmeldung auch Paket grid laden, ist aber in base R
+
+visual.multi.kategoriell <- function(x, y, z,...){ 
+  ## habe erstmal versucht, die Funktion fuer 3 Variablen zu schreiben
+  ## ... also mit weiteren optionalen Argumenten
+  ## Kontrolle der Argumente entfaellt, da mit allen Variablen moeglich
+  if(length(x)!=length(y) | length(x)!= length(z)) ## sicherstellen, dass Variablen
+    ## gleiche Laenge haben, sonst Fehlermeldung
+    return("Die Variablen muessen gleicher Laenge sein.")
+  daten <- data.frame(x, y, z) ## data.frame unserer Variablen erstellen
+  tab <- table(daten) ## Kontingenztabelle erstellen fuer mosaicplot Funktion
+  mosaicplot(tab, shade = TRUE, ...) ## Mosaicplot erstellen mit optionalen weiteren Argumenten
+}
+
+## Beispiel zum Ausprobieren
+a <- c(rep(c("gruen", "rot"), times = 3), rep("blau", times = 6))
+b <- c(rep("tief", times = 6), rep(c("hoch", "mittel"), times = 3))
+c <- c(rep(c("laut"), times = 3), rep("maessig", times = 3), rep("leise", times = 6))
+
+visual.multi.kategoriell(a, b, c, main = "Mosaicplot von a, b und c",
+                         xlab = "a", ylab = "b")
+
+## Ich bin mir nicht sicher, ob die Unklarheit des Plots in meiner Funktion liegt oder
+## daran, dass ich mein Beispiel nicht gut gewaehlt habe.
+
+## Hier ein Beispiel aus dem Internet, mit mosaicplot
+mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)
 
 
 
@@ -125,8 +166,6 @@ visualisierung <- function(data) { ## Funktion zum Visualisieren und Zeichnen vo
 ## Beispiele zum Ausprobieren:
 data <- data.frame(cat1 = c("eins", "zwei", "drei", "vier","eins","funf","eins", "funf"))
 visualisierung(data)
-
-
 
 
 

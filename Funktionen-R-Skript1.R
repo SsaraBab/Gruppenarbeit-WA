@@ -156,24 +156,26 @@ mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)
 ## Hier noch eine Alternative
 
 ## install.packages("ggplot2") ## ggf vorher installieren: ggplot2
-library(ggplot2)
+
 ## install.packages("ggpubr") ## ggf vorher installieren: ggpubr
-library(ggpubr)
-theme_set(theme_pubr())
+
 
 visual.multi.kategoriell2 <- function(x, y, z,...){
   ## zunaechst Kontrolle, dass alle Variablen die gleiche Laenge haben
   if(length(x)!= length(y) | length(x) != length(z))
     return("Die Variablen muessen die gleiche Laenge haben.")
-  df <- data.frame(x, y, z)
-  Ergebnis <- ggplot(df, aes(x = x, y = y),...)+
-    geom_bar(
-      aes(fill = z), stat = "identity", color = "white",
+  library(ggplot2) ## lade noetige Pakete 
+  library(ggpubr)
+  theme_set(theme_pubr())
+  df <- data.frame(x, y, z) ## erstelle data.frame aus Variablen
+  Ergebnis <- ggplot(df, aes(x = x, y = y),...)+ ## plotte die Grafik mit ggplot
+    geom_bar( ## Balkendiagramme proportional zur Anzahl in Gruppe
+      aes(fill = z), stat = "identity", color = "white", ##aesthetic mappings
       position = position_dodge(0.9)
     )+
-    facet_wrap(~z) + 
-    fill_palette("jco")
-  return(Ergebnis)
+    facet_wrap(~z) + ## 1-dimensionale Abfolge von Panels in 2-d verwandeln
+    fill_palette("jco") ## Palette fuer das Ausfuellen waehlen
+  return(Ergebnis) ## Ergebnis ausgeben
 }
 
 visual.multi.kategoriell2(a, b, c, main = "Balkendiagramm von a, b und c")

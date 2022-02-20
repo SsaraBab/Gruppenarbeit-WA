@@ -49,10 +49,11 @@ kategoriell(y)
 ## berechnet ausgibt
 
 bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
-  t <- table(x, y) ##Erzeugung von KOntingenztafel
-  h <- prop.table(t, 1) ##Tafel fuer die relativen Haeufigkeiten
+  H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
+  h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  Ergebnis <- h
+  hkum <- cumsum(h)
+  Ergebnis <- cbind(h, hkum)
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
@@ -94,7 +95,7 @@ metrisch.dichotom(l, m)
 create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = mittleres
   
   if(!is.numeric(x)|!is.numeric(l)|!is.numeric(m))
-    return("Alle Werte müssen numeric sein.")
+    return("Alle Werte mussen numeric sein.")
   low <- quantile(x,l) 
   medium <- quantile(x,m)   ## Berechnung der quantile von x
   high <- quantile(x,1)
@@ -102,8 +103,8 @@ create.quantil <- function(x, l = 1/3, m = 2/3){  ## l = niedriges Quantil, m = 
   complete <- ifelse(x <= quantile(x,l), "low", 
          ifelse(x <= quantile(x,m), "medium","high")) ## Klassifizierung der Werte nach Quantilen, braucht evtl. noch Anpassung um Sinnvoller zu sein.
   
-  return(c(low,medium,high))
-  # return(complete)           ## fuer Gewuenschte Version auskommentierung aendern
+  # return(c(low,medium,high))
+  return(complete)           ## fuer Gewuenschte Version auskommentierung aendern
   
 }
 

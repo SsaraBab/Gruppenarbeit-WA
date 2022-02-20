@@ -154,7 +154,6 @@ visual.multi.kategoriell(a, b, c, main = "Mosaicplot von a, b und c",
 mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)
 
 
-
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier kategorialen Variablen erstellt.
 
 #   
@@ -166,7 +165,5 @@ visualisierung <- function(data) { ## Funktion zum Visualisieren und Zeichnen vo
 ## Beispiele zum Ausprobieren:
 data <- data.frame(cat1 = c("eins", "zwei", "drei", "vier","eins","funf","eins", "funf"))
 visualisierung(data)
-
-
 
 

@@ -146,3 +146,29 @@ visual.multi.kategoriell(a, b, c, main = "Mosaicplot von a, b und c",
 
 ## Hier ein Beispiel aus dem Internet, mit mosaicplot
 mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)
+
+## Hier noch eine Alternative
+
+## install.packages("ggplot2") ## ggf vorher installieren: ggplot2
+library(ggplot2)
+## install.packages("ggpubr") ## ggf vorher installieren: ggpubr
+library(ggpubr)
+theme_set(theme_pubr())
+
+visual.multi.kategoriell2 <- function(x, y, z,...){
+  ## zunaechst Kontrolle, dass alle Variablen die gleiche Laenge haben
+  if(length(x)!= length(y) | length(x) != length(z))
+    return("Die Variablen muessen die gleiche Laenge haben.")
+  df <- data.frame(x, y, z)
+  Ergebnis <- ggplot(df, aes(x = x, y = y),...)+
+    geom_bar(
+      aes(fill = z), stat = "identity", color = "white",
+      position = position_dodge(0.9)
+    )+
+    facet_wrap(~z) + 
+    fill_palette("jco")
+  return(Ergebnis)
+}
+
+visual.multi.kategoriell2(a, b, c, main = "Balkendiagramm von a, b und c")
+## sieht schoener aus als der Mosaicplot, Problem: ich kriege keinen Titel rein :(

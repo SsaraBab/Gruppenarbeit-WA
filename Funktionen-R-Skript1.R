@@ -56,7 +56,7 @@ bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
   H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
   h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  HRow <- rowSums(H) ## Randsumme für absolute Haeufigkeiten (Zeile)
+  HRow <- rowSums(H) ## Randsumme f?r absolute Haeufigkeiten (Zeile)
   Ergebnis <- cbind("abs. Haeufigk." = H, "RowSum" = HRow, "rel. Haeufigk." = h)
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
@@ -73,7 +73,7 @@ bi.kategoriell(y, z)
 ## den Zusammengang zwischen einer metrischen und einer
 ## dichotomen Variablen berechnet und ausgibt
 
-metrisch.dichotom <- function(x, y){ ## Funktion fuer eine merische und eine dichotome Variable 
+metrisch.dichotom <- function(x, y){ ## Funktion fuer eine metrische und eine dichotome Variable 
   ## x dichotom, y numerisch
   if(length(x) != length(y)) 
     return("Die Variablen muessen gleicher Laenge sein")
@@ -193,4 +193,19 @@ visualisierung <- function(data) { ## Funktion zum Visualisieren und Zeichnen vo
 data <- data.frame(cat1 = c("eins", "zwei", "drei", "vier","eins","funf","eins", "funf"))
 visualisierung(data)
 
+## freiwillig: weitere zur Deskription und Visualisierung geeignete Funktionen
 
+## Boxplots fuer eine metrische Variable nach einer dichotomen Variable
+
+grafik.metrisch.dichotom <- function(x, y,...){ ## Funktion fuer 1 metrische, 1 dichotome Variable
+  ## hierbei soll x dichotom sein, y numerisch, weitere Argumente koennen uebergeben werden
+  ## z. b. fuer Titel, Achsenbeschriftung
+  if(!is.numeric(y)) return("Die Variable y muss numeric sein.")
+  box <- boxplot(y ~ x,...) ##erstelle Boxplot fuer x(metrisch), getrennt nach y(dichotom)
+  return(box) ## Ergebnis ausgeben
+}
+
+## Beispiel zum Ausprobieren, kopiert aus d)
+m <- c(1,3,2,4,2,7,12,0)
+l <- c(rep(c("male", "female"), 4))
+grafik.metrisch.dichotom(l,m, main = "Boxplots von m, getrennt nach l")

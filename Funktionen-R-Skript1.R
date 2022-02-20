@@ -118,8 +118,32 @@ create.quantil(q,0,1/2)
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt
 
+## install.packages("vcd") ## falls noch nicht installiert, Paket vcd hier installieren
+library(vcd) ## Paket vcd laden
+library(grid) ## wegen Warnmeldung auch Paket grid laden, ist aber in base R
 
+visual.multi.kategoriell <- function(x, y, z,...){ 
+  ## habe erstmal versucht, die Funktion fuer 3 Variablen zu schreiben
+  ## ... also mit weiteren optionalen Argumenten
+  ## Kontrolle der Argumente entfaellt, da mit allen Variablen moeglich
+  if(length(x)!=length(y) | length(x)!= length(z)) ## sicherstellen, dass Variablen
+    ## gleiche Laenge haben, sonst Fehlermeldung
+    return("Die Variablen muessen gleicher Laenge sein.")
+  daten <- data.frame(x, y, z) ## data.frame unserer Variablen erstellen
+  tab <- table(daten) ## Kontingenztabelle erstellen fuer mosaicplot Funktion
+  mosaicplot(tab, shade = TRUE, ...) ## Mosaicplot erstellen mit optionalen weiteren Argumenten
+}
 
+## Beispiel zum Ausprobieren
+a <- c(rep(c("gruen", "rot"), times = 3), rep("blau", times = 6))
+b <- c(rep("tief", times = 6), rep(c("hoch", "mittel"), times = 3))
+c <- c(rep(c("laut"), times = 3), rep("maessig", times = 3), rep("leise", times = 6))
 
+visual.multi.kategoriell(a, b, c, main = "Mosaicplot von a, b und c",
+                         xlab = "a", ylab = "b")
 
+## Ich bin mir nicht sicher, ob die Unklarheit des Plots in meiner Funktion liegt oder
+## daran, dass ich mein Beispiel nicht gut gewaehlt habe.
 
+## Hier ein Beispiel aus dem Internet, mit mosaicplot
+mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)

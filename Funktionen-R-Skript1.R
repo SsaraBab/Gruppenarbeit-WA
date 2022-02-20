@@ -32,10 +32,10 @@ metrisch(x)
 ## fuer kategoriale Variablen berechnet und ausgibt
 
 kategoriell <- function(x){ ## Funktion fuer kategorielle Variablen
-  t <- table(x) ##Erstellung einer Tabelle der absoluten Haeufigkeiten
-  h <- prop.table(t) ##Erstellung einer Tabelle der relaiven Haeufigkeiten
+  H <- table(x) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
+  h <- H/length(x) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  Ergebnis <- h
+  Ergebnis <- cbind("abs. Haeufigk." = H, "rel. Haeufigk." = h) ## relative & absolute Haeufigkeiten in einem Frame
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) ## letzten Abstand noch korrigieren!
@@ -55,10 +55,9 @@ bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
   H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
   h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  hkum <- cumsum(h)
-  Ergebnis <- cbind(h, hkum)
+  HRow <- rowSums(H) ## Randsumme für absolute Haeufigkeiten (Zeile)
+  Ergebnis <- cbind("abs. Haeufigk." = H, "RowSum" = HRow, "rel. Haeufigk." = h)
   ## Gebe die errechneten Werte aus
-  
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
 

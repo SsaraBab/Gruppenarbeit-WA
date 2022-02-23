@@ -54,10 +54,11 @@ kategoriell(y)
 
 bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
   H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
+  H <- addmargins(table(x,y)) ## Zeilen- und Spaltensummen hinzufuegen
   h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  HRow <- rowSums(H) ## Randsumme f?r absolute Haeufigkeiten (Zeile)
-  Ergebnis <- cbind("abs. Haeufigk." = H, "RowSum" = HRow, "rel. Haeufigk." = h)
+  h <- addmargins(prop.table(table(x, y))) ## Zeilen- und SPaltensummen hinzufuegen
+  Ergebnis <- cbind("abs. Haeufigk." = H, "rel. Haeufigk." = h) ## rel. und abs. Haeufigkeitstabellen zusammenfuegen
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }

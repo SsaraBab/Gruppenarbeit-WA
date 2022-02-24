@@ -16,7 +16,8 @@ metrisch <- function(x){ ## Funktion fuer metrische Variablen
   stabw <- sd(x) ## berechne die Standardabweichung und weise ihr einen Namen zu
   med <- median(x) ## berechne den Median und weise ihm einen Namen zu
   Mod <- getmode(x) ##Berechne den Modus mit der Hilfsfunktion aus Funktionen-R-Skript2.R
-  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw, ",der Modus liegt bei",Mod,"und der Median ist ",med,".", sep = "")
+  Ergebnis <- data.frame(Mittelwert = m, Median = med, Standardabweichung = stabw, Modus = Mod)
+  ##Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw, ",der Modus liegt bei",Mod,"und der Median ist ",med,".", sep = "")
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) 

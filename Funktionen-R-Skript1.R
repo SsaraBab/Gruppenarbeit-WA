@@ -83,8 +83,8 @@ metrisch.dichotom <- function(x, y){ ## Funktion fuer eine metrische und eine di
     x <- as.numeric(factor(x))
   
   e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
-  f <- tapply(m, l, mean)
-  Ergebnis <- list(e, f)
+  f <- aggregate(m, list(l), mean)
+  Ergebnis <- list(e, f, f[2,2] -f[1,2])
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) ## letzten Abstand noch korrigieren!

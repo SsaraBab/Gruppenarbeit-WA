@@ -48,6 +48,13 @@ metrisch(I_Program)
 
 ## (Funktion b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
 ## fuer kategoriale Variablen berechnet und ausgibt
+
+# Funktion a aufzurufen
+function(kategoriell)
+  
+  Datensatz$Studienfach <- c(rep(c("Statistic", "Data Science", "informatik", "Mathe"), c(31,37,25,7)))
+kategoriell(Datensatz$Studienfach)
+
 ## Funktion b
 #function(kategoriell)
 
@@ -56,6 +63,7 @@ kategoriell(I_Mathe)
 kategoriell(I_Program)
 kategoriell(Fach)
 kategoriell(Mathe_LK)
+
 
 # hist(kategoriell(Alter)[,1]) ### evtl. Histogramm(e) fuer relative Haeufigkeit hinzufuegen
 

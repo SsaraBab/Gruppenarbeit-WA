@@ -15,32 +15,57 @@ library(tidyverse)
 library(readr)
 
 Datensatz <- read_csv("Datensatz.csv")
+## Umwandlung in Faktoren
+Datensatz$Studienfach <- as.factor(Datensatz$Studienfach) 
+Datensatz$Mathe_LK <- as.factor(Datensatz$Mathe_LK)
 
 # Nutzen von Dateien
 
 dplyr::glimpse(Datensatz)
 
+# Variablen aus Datensatz zur Nutzung in Funktionen
+ID <- Datensatz$ID
+Alter <- Datensatz$Alter
+Fach <- Datensatz$Studienfach
+I_Mathe <- Datensatz$Interesse_Mathe
+I_Program <- Datensatz$Interesse_Programmieren
+Mathe_LK <- Datensatz$Mathe_LK
+
 # Implementierung der Funktionen
+
+# R-Skript1 einzulesen
+source("Funktionen-R-Skript1.R")
 
 ## (Funktion a) Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer metrische
 ## Variablen berechnet und ausgibt
 
-# R-Skript1 einzulesen
-source("Funktionen-R-Skript1.R") 
-
-# Funktion a aufzurufen
-function(metrisch)
-x <- Datensatz$ID
-metrisch(x)
+## Funktion a
+#function(metrisch)
+  
+metrisch(Alter)
+metrisch(I_Mathe)
+metrisch(I_Program)
 
 ## (Funktion b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
 ## fuer kategoriale Variablen berechnet und ausgibt
+
 # Funktion a aufzurufen
 function(kategoriell)
   
   Datensatz$Studienfach <- c(rep(c("Statistic", "Data Science", "informatik", "Mathe"), c(31,37,25,7)))
 kategoriell(Datensatz$Studienfach)
 
+## Funktion b
+#function(kategoriell)
+
+kategoriell(Alter)
+kategoriell(I_Mathe)
+kategoriell(I_Program)
+kategoriell(Fach)
+kategoriell(Mathe_LK)
+
+
+# hist(kategoriell(Alter)[,1]) ### evtl. Histogramm(e) fuer relative Haeufigkeit hinzufuegen
 
 ## (Funktion c) Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer
 ## den Zusammenhang zwischen zwei kategorialen Variablen

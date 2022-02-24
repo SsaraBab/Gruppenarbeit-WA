@@ -16,7 +16,8 @@ metrisch <- function(x){ ## Funktion fuer metrische Variablen
   stabw <- sd(x) ## berechne die Standardabweichung und weise ihr einen Namen zu
   med <- median(x) ## berechne den Median und weise ihm einen Namen zu
   Mod <- getmode(x) ##Berechne den Modus mit der Hilfsfunktion aus Funktionen-R-Skript2.R
-  Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw, ",der Modus liegt bei",Mod,"und der Median ist ",med,".", sep = "")
+  Ergebnis <- data.frame(Mittelwert = m, Median = med, Standardabweichung = stabw, Modus = Mod)
+  ##Ergebnis <- paste("Das arithmetische Mittel ist ",m," mit einer Standardabweichung von ",stabw, ",der Modus liegt bei",Mod,"und der Median ist ",med,".", sep = "")
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) 
@@ -82,7 +83,8 @@ metrisch.dichotom <- function(x, y){ ## Funktion fuer eine metrische und eine di
     x <- as.numeric(factor(x))
   
   e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
-  Ergebnis <- e
+  f <- tapply(m, l, mean)
+  Ergebnis <- list(e, f)
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) ## letzten Abstand noch korrigieren!

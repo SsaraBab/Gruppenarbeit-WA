@@ -54,10 +54,11 @@ kategoriell(y)
 
 bi.kategoriell <- function(x, y){ ## Funktion fuer zwei kategorielle Variablen
   H <- table(x, y) ##Erzeugung von KOntingenztafel (absolute Haeufigkeiten)
+  H <- addmargins(table(x,y)) ## Zeilen- und Spaltensummen hinzufuegen
   h <- prop.table(H, 1) ##Tafel fuer die relativen Haeufigkeiten
   h <- round(h, digits = 4) ##Rundung der relativen Haeufigkeiten auf 4 Nachkommastellen
-  HRow <- rowSums(H) ## Randsumme f?r absolute Haeufigkeiten (Zeile)
-  Ergebnis <- cbind("abs. Haeufigk." = H, "RowSum" = HRow, "rel. Haeufigk." = h)
+  h <- addmargins(prop.table(table(x, y))) ## Zeilen- und SPaltensummen hinzufuegen
+  Ergebnis <- cbind("abs. Haeufigk." = H, "rel. Haeufigk." = h) ## rel. und abs. Haeufigkeitstabellen zusammenfuegen
   ## Gebe die errechneten Werte aus
   return(Ergebnis) ## letzten Abstand noch korrigieren!
 }
@@ -123,37 +124,9 @@ create.quantil(q,0,1/2)
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt
 
-## install.packages("vcd") ## falls noch nicht installiert, Paket vcd hier installieren
-library(vcd) ## Paket vcd laden
-library(grid) ## wegen Warnmeldung auch Paket grid laden, ist aber in base R
-
-visual.multi.kategoriell <- function(x, y, z,...){ 
-  ## habe erstmal versucht, die Funktion fuer 3 Variablen zu schreiben
-  ## ... also mit weiteren optionalen Argumenten
-  ## Kontrolle der Argumente entfaellt, da mit allen Variablen moeglich
-  if(length(x)!=length(y) | length(x)!= length(z)) ## sicherstellen, dass Variablen
-    ## gleiche Laenge haben, sonst Fehlermeldung
-    return("Die Variablen muessen gleicher Laenge sein.")
-  daten <- data.frame(x, y, z) ## data.frame unserer Variablen erstellen
-  tab <- table(daten) ## Kontingenztabelle erstellen fuer mosaicplot Funktion
-  mosaicplot(tab, shade = TRUE, ...) ## Mosaicplot erstellen mit optionalen weiteren Argumenten
-}
-
-## Beispiel zum Ausprobieren
-a <- c(rep(c("gruen", "rot"), times = 3), rep("blau", times = 6))
-b <- c(rep("tief", times = 6), rep(c("hoch", "mittel"), times = 3))
-c <- c(rep(c("laut"), times = 3), rep("maessig", times = 3), rep("leise", times = 6))
-
-visual.multi.kategoriell(a, b, c, main = "Mosaicplot von a, b und c",
-                         xlab = "a", ylab = "b")
-
-## Ich bin mir nicht sicher, ob die Unklarheit des Plots in meiner Funktion liegt oder
-## daran, dass ich mein Beispiel nicht gut gewaehlt habe.
-
-## Hier ein Beispiel aus dem Internet, mit mosaicplot
-mosaicplot( ~ Admit + Gender + Dept, data = UCBAdmissions, shade = TRUE)
-
-## Hier noch eine Alternative
+## 2. Versuch einer Funktion fuer 3 kategorielle Variablen
+## Funktion visual.multi.kategoriell geloescht, da sie zwar laeuft, aber kein gutes
+## Ergebnis liefert
 
 ## install.packages("ggplot2") ## ggf vorher installieren: ggplot2
 
@@ -177,6 +150,12 @@ visual.multi.kategoriell2 <- function(x, y, z,...){
     fill_palette("jco") ## Palette fuer das Ausfuellen waehlen
   return(Ergebnis) ## Ergebnis ausgeben
 }
+
+## Beispiel zum Ausprobieren
+a <- c(rep(c("gruen", "rot"), times = 3), rep("blau", times = 6))
+b <- c(rep("tief", times = 6), rep(c("hoch", "mittel"), times = 3))
+c <- c(rep(c("laut"), times = 3), rep("maessig", times = 3), rep("leise", times = 6))
+d <- c(rep(c("sehr hell"), times = 2), rep(c("hell"), times = 2, rep(c("dunkel"), times = 8)))
 
 visual.multi.kategoriell2(a, b, c, main = "Balkendiagramm von a, b und c")
 ## sieht schoener aus als der Mosaicplot, Problem: ich kriege keinen Titel rein :(

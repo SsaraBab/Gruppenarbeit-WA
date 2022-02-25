@@ -83,7 +83,8 @@ metrisch.dichotom <- function(x, y){ ## Funktion fuer eine metrische und eine di
     x <- as.numeric(factor(x))
   
   e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
-  Ergebnis <- e
+  f <- aggregate(m, list(l), mean)
+  Ergebnis <- list(e, f, f[2,2] -f[1,2])
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) ## letzten Abstand noch korrigieren!
@@ -156,10 +157,62 @@ visual.multi.kategoriell2 <- function(x, y, z,...){
 a <- c(rep(c("gruen", "rot"), times = 3), rep("blau", times = 6))
 b <- c(rep("tief", times = 6), rep(c("hoch", "mittel"), times = 3))
 c <- c(rep(c("laut"), times = 3), rep("maessig", times = 3), rep("leise", times = 6))
-d <- c(rep(c("sehr hell"), times = 2), rep(c("hell"), times = 2, rep(c("dunkel"), times = 8)))
+v <- c(rep(c("Ja"), times = 4), rep(c("Nein"), times = 5), rep(c("Keine Angabe"), times = 3))
 
 visual.multi.kategoriell2(a, b, c, main = "Balkendiagramm von a, b und c")
 ## sieht schoener aus als der Mosaicplot, Problem: ich kriege keinen Titel rein :(
+
+visual.multi.kategoriell3 <- function(x, y, z, d = NULL, ...){
+  ## zunaechst Kontrolle, dass alle Variablen die gleiche Laenge haben
+  if(length(x)!= length(y) | length(y) != length(z))
+    return("Die Variablen muessen die gleiche Laenge haben.")
+  if(is.null(d) == TRUE){
+    library(ggplot2) ## lade noetige Pakete 
+    library(ggpubr)
+    theme_set(theme_pubr())
+    df <- data.frame(x, y, z) ## erstelle data.frame aus Variablen
+    Ergebnis <- ggplot(df, aes(x = x, y = y),...)+ ## plotte die Grafik mit ggplot
+      geom_bar( ## Balkendiagramme proportional zur Anzahl in Gruppe
+        aes(fill = z), stat = "identity", color = "white", ##aesthetic mappings
+        position = position_dodge(0.9)
+      )+
+      facet_wrap(~z) + ## 1-dimensionale Abfolge von Panels in 2-d verwandeln
+      fill_palette("jco") ## Palette fuer das Ausfuellen waehlen
+    return(Ergebnis) ## Ergebnis ausgeben
+  }
+  if(is.null(d) == FALSE){
+    opar <- par(mfrow = c(4,4))
+    plot.new()
+    plot.window(xlim = c(0,5), ylim = c(0,5))
+    text(x = 2.5, y = 2.5, "a")
+    barplot(prop.table(table(a,b),2))
+    barplot(prop.table(table(a,c),2))        
+    barplot(prop.table(table(a,d),2))
+    barplot(prop.table(table(b,a),2))
+    plot.new()
+    plot.window(xlim = c(0,5), ylim = c(0,5))
+    text(x = 2.5, y = 2.5, "b")
+    barplot(prop.table(table(b,c),2))
+    barplot(prop.table(table(b,d),2))
+    barplot(prop.table(table(c,a),2))
+    barplot(prop.table(table(c,b),2))
+    plot.new()
+    plot.window(xlim = c(0,5), ylim = c(0,5))
+    text(x = 2.5, y = 2.5, "c")
+    barplot(prop.table(table(c,d),2))
+    barplot(prop.table(table(d,a),2))
+    barplot(prop.table(table(d,b),2))
+    barplot(prop.table(table(d,c),2))
+    plot.new()
+    plot.window(xlim = c(0,5), ylim = c(0,5))
+    text(x = 2.5, y = 2.5, "d")
+    on.exit(par(opar))
+  }
+} 
+
+## Beispiel:
+visual.multi.kategoriell3(a, b, c, v, main = "Balkendiagramm von a, b, c und d")
+visual.multi.kategoriell3(a, b, c, main = "Balkendiagramm von a, b und c")
 
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier kategorialen Variablen erstellt.
 

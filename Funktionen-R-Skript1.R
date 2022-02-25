@@ -83,8 +83,8 @@ metrisch.dichotom <- function(x, y){ ## Funktion fuer eine metrische und eine di
     x <- as.numeric(factor(x))
   
   e <- cor.test(x,y)    ## berechnet Punktbiseriale Korrelation
-  f <- aggregate(m, list(l), mean)
-  Ergebnis <- list(e, f, f[2,2] -f[1,2])
+  f <- aggregate(y, list(x), mean) # Mittelwert nach x aufgeteilt
+  Ergebnis <- list(e, f, f[2,2] -f[1,2]) ## Ergebnis als Liste ausgegeben
   ## Gebe die errechneten Werte aus
   
   return(Ergebnis) ## letzten Abstand noch korrigieren!
@@ -95,7 +95,7 @@ m <- c(1,3,2,4,2,7,12,0)
 l <- c(rep(c("male", "female"), 4))
 metrisch.dichotom(l, m)
 
-
+mean(m)
 
 ## (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")

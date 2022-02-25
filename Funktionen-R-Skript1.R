@@ -161,8 +161,12 @@ v <- c(rep(c("Ja"), times = 4), rep(c("Nein"), times = 5), rep(c("Keine Angabe")
 
 visual.multi.kategoriell2(a, b, c, main = "Balkendiagramm von a, b und c")
 ## sieht schoener aus als der Mosaicplot, Problem: ich kriege keinen Titel rein :(
-
-visual.multi.kategoriell3 <- function(x, y, z, d = NULL, ...){
+## WICHTIG: bei Fehlermeldung bitte vor Ausfuehren Plotfenster gross ziehen
+visual.multi.kategoriell3 <- function(x, y, z, d = NULL, main = NULL,
+                                      label1 = NULL,
+                                      label2 = NULL,
+                                      label3 = NULL,
+                                      label4 = NULL,...){
   ## zunaechst Kontrolle, dass alle Variablen die gleiche Laenge haben
   if(length(x)!= length(y) | length(y) != length(z))
     return("Die Variablen muessen die gleiche Laenge haben.")
@@ -171,47 +175,54 @@ visual.multi.kategoriell3 <- function(x, y, z, d = NULL, ...){
     library(ggpubr)
     theme_set(theme_pubr())
     df <- data.frame(x, y, z) ## erstelle data.frame aus Variablen
-    Ergebnis <- ggplot(df, aes(x = x, y = y),...)+ ## plotte die Grafik mit ggplot
+    Ergebnis <- ggplot(df, aes(x = x, y = y), ...)+ ## plotte die Grafik mit ggplot
       geom_bar( ## Balkendiagramme proportional zur Anzahl in Gruppe
         aes(fill = z), stat = "identity", color = "white", ##aesthetic mappings
         position = position_dodge(0.9)
       )+
       facet_wrap(~z) + ## 1-dimensionale Abfolge von Panels in 2-d verwandeln
-      fill_palette("jco") ## Palette fuer das Ausfuellen waehlen
+      fill_palette("jco") + ## Palette fuer das Ausfuellen waehlen
+      ggtitle(main) + ## Diagramm-Titel hinzufuegen
+      theme(plot.title = element_text(hjust = 0.5)) ## Titel zentrieren
     return(Ergebnis) ## Ergebnis ausgeben
-  }
+     }
   if(is.null(d) == FALSE){
-    opar <- par(mfrow = c(4,4))
+    opar <- par(mfrow = c(4,4), oma = c(1,1,4,1))
     plot.new()
     plot.window(xlim = c(0,5), ylim = c(0,5))
-    text(x = 2.5, y = 2.5, "a")
-    barplot(prop.table(table(a,b),2))
-    barplot(prop.table(table(a,c),2))        
-    barplot(prop.table(table(a,d),2))
-    barplot(prop.table(table(b,a),2))
+    text(x = 2.5, y = 2.5, labels = label1)
+    barplot(prop.table(table(x,y),2))
+    barplot(prop.table(table(x,z),2))        
+    barplot(prop.table(table(x,d),2))
+    barplot(prop.table(table(y,x),2))
     plot.new()
     plot.window(xlim = c(0,5), ylim = c(0,5))
-    text(x = 2.5, y = 2.5, "b")
-    barplot(prop.table(table(b,c),2))
-    barplot(prop.table(table(b,d),2))
-    barplot(prop.table(table(c,a),2))
-    barplot(prop.table(table(c,b),2))
+    text(x = 2.5, y = 2.5, labels = label2)
+    barplot(prop.table(table(y,z),2))
+    barplot(prop.table(table(y,d),2))
+    barplot(prop.table(table(z,x),2))
+    barplot(prop.table(table(z,y),2))
     plot.new()
     plot.window(xlim = c(0,5), ylim = c(0,5))
-    text(x = 2.5, y = 2.5, "c")
-    barplot(prop.table(table(c,d),2))
-    barplot(prop.table(table(d,a),2))
-    barplot(prop.table(table(d,b),2))
-    barplot(prop.table(table(d,c),2))
+    text(x = 2.5, y = 2.5, labels = label3)
+    barplot(prop.table(table(z,d),2))
+    barplot(prop.table(table(d,x),2))
+    barplot(prop.table(table(d,y),2))
+    barplot(prop.table(table(d,z),2))
     plot.new()
     plot.window(xlim = c(0,5), ylim = c(0,5))
-    text(x = 2.5, y = 2.5, "d")
+    text(x = 2.5, y = 2.5, labels = label4)
+    title(main = main, outer = TRUE)
     on.exit(par(opar))
   }
 } 
 
 ## Beispiel:
-visual.multi.kategoriell3(a, b, c, v, main = "Balkendiagramm von a, b, c und d")
+visual.multi.kategoriell3(a, b, c, v, main = "Balkendiagramm von a, b, c und d", 
+                          label1 = "Variable a", 
+                          label2 = "Variable b",
+                          label3 = "Variable c",
+                          label4 = "Variable d")
 visual.multi.kategoriell3(a, b, c, main = "Balkendiagramm von a, b und c")
 
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier kategorialen Variablen erstellt.

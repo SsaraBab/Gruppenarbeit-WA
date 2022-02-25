@@ -41,10 +41,10 @@ source("Funktionen-R-Skript1.R")
 
 ## Funktion a
 #function(metrisch)
-  
-metrisch(Alter)
-metrisch(I_Mathe)
-metrisch(I_Program)
+
+metrisch(Alter)  # Durchschnittsalter: 25
+metrisch(I_Mathe)  # Mittelwert: 4,29
+metrisch(I_Program)  # Mittelwert: 4,05
 
 ## (Funktion b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
 ## fuer kategoriale Variablen berechnet und ausgibt
@@ -58,11 +58,11 @@ kategoriell(Datensatz$Studienfach)
 ## Funktion b
 #function(kategoriell)
 
-kategoriell(Alter)
-kategoriell(I_Mathe)
-kategoriell(I_Program)
-kategoriell(Fach)
-kategoriell(Mathe_LK)
+kategoriell(Alter) # Starke Haeufung 23-27
+kategoriell(I_Mathe) # recht Gleichverteilt, Spitze bei 7
+kategoriell(I_Program) # Haeufung bei Extremwerten
+kategoriell(Fach) # Mathe geringe Haeufigkeit
+kategoriell(Mathe_LK) # sehr gleich (50/50)
 
 
 # hist(kategoriell(Alter)[,1]) ### evtl. Histogramm(e) fuer relative Haeufigkeit hinzufuegen
@@ -70,8 +70,12 @@ kategoriell(Mathe_LK)
 ## (Funktion c) Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer
 ## den Zusammenhang zwischen zwei kategorialen Variablen
 ## berechnet ausgibt
-# Funktion a aufzurufen
+# Funktion c aufzurufen
 
+bi.kategoriell(I_Mathe, Mathe_LK) # Ja Spike bei 7
+bi.kategoriell(I_Program, Mathe_LK) # Mathe_LK Ja Ertremwertverteilt
+bi.kategoriell(I_Mathe, I_Program) # zu geringe Samplesize
+bi.kategoriell(Fach, Mathe_LK) # Statistik einziges Fach weniger Mathe_LK ja als nein
 
 
 ## (Funktion d) Eine Funktion, die geeignete deskriptive bivariate Statistiken fuer
@@ -79,17 +83,17 @@ kategoriell(Mathe_LK)
 ## dichotomen Variablen berechnet und ausgibt
 # Funktion a aufzurufen
 function(metrisch.dichotom)
-m <- c(Datensatz$Interesse_Programmieren)
+  m <- c(Datensatz$Interesse_Programmieren)
 l <- 
   
-metrisch.dichotom(l, m)
+  metrisch.dichotom(l, m)
 
 
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
 function (create.quantil)
-q <- Datensatz$Interesse_Programmieren
+  q <- Datensatz$Interesse_Programmieren
 create.quantil(q)
 create.quantil(q,0,1/2)
 
@@ -101,5 +105,5 @@ create.quantil(q,0,1/2)
 # Funktion a aufzurufen
 function(visualisierung)
   
-data <- data.frame ()
+  data <- data.frame ()
 visualisierung(data)

@@ -74,8 +74,8 @@ function(metrisch.dichotom)
   m <-c(I_Mathe)
   l <-c(Mathe_LK)
   
-  metrisch.dichotom(l,m)
-
+metrisch.dichotom(l,m)
+  
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
@@ -88,7 +88,12 @@ create.quantil(q,0,1/2)
 ## kategorialen Variablen erstellt.
 
 # Funktion f aufzurufen
-function(visualisierung)
+function(visual.multi.kategoriell3)
+  I_Prog_Kat <- create.quantil(I_Program)
+  I_Mathe_Kat <- create.quantil(I_Mathe)
   
+visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm von Faechern, Programmierung und Mathe")
+  
+function(visualisierung)
   data <- data.frame ()
 visualisierung(data)

@@ -16,7 +16,7 @@ library(tidyverse)
 library(readr)
 
 Datensatz <- read_csv("Datensatz.csv")
-## Umwandlung in Faktoren
+# Umwandlung in Faktoren
 Datensatz$Studienfach <- as.factor(Datensatz$Studienfach) 
 Datensatz$Mathe_LK <- as.factor(Datensatz$Mathe_LK)
 
@@ -70,30 +70,30 @@ bi.kategoriell(Fach, Mathe_LK)       # Statistik einziges Fach weniger Mathe_LK 
 
 # funktion d aufzurufen
 function(metrisch.dichotom)
- 
+  
   m <-c(I_Mathe)
-  l <-c(Mathe_LK)
-  
+l <-c(Mathe_LK)
+
 metrisch.dichotom(l,m)
-  
+
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
 function (create.quantil)
-#  q <- Datensatz$Interesse_Programmieren
-create.quantil(I_Program)
+  #  q <- Datensatz$Interesse_Programmieren
+  create.quantil(I_Program)
 create.quantil(I_Program,0,1/2)
 
 ## (Funktion f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt.
 
-# Funktion f aufzurufen
+# funktion f aufzurufen
 function(visual.multi.kategoriell3)
   I_Prog_Kat <- create.quantil(I_Program)
-  I_Mathe_Kat <- create.quantil(I_Mathe)
-  
+I_Mathe_Kat <- create.quantil(I_Mathe)
+
 visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm von Faechern, Programmierung und Mathe")
-  
+
 function(visualisierung)
   data <- data.frame ()
 visualisierung(data)

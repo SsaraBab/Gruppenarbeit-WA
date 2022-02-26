@@ -12,11 +12,11 @@
 # Install R Packages "Tidyverse"
 
 library(tidyverse)
+
 library(readr)
 
 Datensatz <- read_csv("Datensatz.csv")
-
-## Umwandlung in Faktoren
+# Umwandlung in Faktoren
 Datensatz$Studienfach <- as.factor(Datensatz$Studienfach) 
 Datensatz$Mathe_LK <- as.factor(Datensatz$Mathe_LK)
 
@@ -33,24 +33,6 @@ Mathe_LK <- Datensatz$Mathe_LK
 
 # R-Skript1 einzulesen
 source("Funktionen-R-Skript1.R")
-
-## (funktion a - function(metrisch)) - Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer metrische
-## Variablen berechnet und ausgibt
-
-# function a aufzurufen
-metrisch(Alter)
-metrisch(I_Mathe)
-metrisch(I_Program)
-
-## (Funktion b) - function(kategoriell) - Eine Funktion, die verschiedene geeignete deskriptive Statistiken 
-## fuer kategoriale Variablen berechnet und ausgibt
-
-## funktion b aufzurufen
-kategoriell(Alter)
-kategoriell(I_Mathe)
-kategoriell(I_Program)
-kategoriell(Fach)
-kategoriell(Mathe_LK)
 
 ## (Funktion a - function(metrisch)) Eine Funktion, die verschiedene geeignete deskriptive Statistiken fuer metrische
 ## Variablen berechnet und ausgibt
@@ -76,8 +58,6 @@ kategoriell(Mathe_LK)  # sehr gleich (50/50)
 ## den Zusammenhang zwischen zwei kategorialen Variablen
 ## berechnet ausgibt
 
-## funktion c aufzurufen
-
 # funktion c aufzurufen
 bi.kategoriell(I_Mathe, Mathe_LK)    # Ja Spike bei 7
 bi.kategoriell(I_Program, Mathe_LK)  # Mathe_LK Ja Ertremwertverteilt
@@ -90,33 +70,30 @@ bi.kategoriell(Fach, Mathe_LK)       # Statistik einziges Fach weniger Mathe_LK 
 
 # funktion d aufzurufen
 function(metrisch.dichotom)
- 
-  m <-c(I_Mathe)
-  l <-c(Mathe_LK)
   
+  m <-c(I_Mathe)
+l <-c(Mathe_LK)
+
 metrisch.dichotom(l,m)
 
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
-
-## funktion e aufzurufen
 function (create.quantil)
-
-#  q <- Datensatz$Interesse_Programmieren
-create.quantil(I_Program)
+  #  q <- Datensatz$Interesse_Programmieren
+  create.quantil(I_Program)
 create.quantil(I_Program,0,1/2)
 
 ## (Funktion f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt.
 
-# Funktion f aufzurufen
+# funktion f aufzurufen
 function(visual.multi.kategoriell3)
   I_Prog_Kat <- create.quantil(I_Program)
-  I_Mathe_Kat <- create.quantil(I_Mathe)
-  
+I_Mathe_Kat <- create.quantil(I_Mathe)
+
 visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm von Faechern, Programmierung und Mathe")
-  
+
 function(visualisierung)
   data <- data.frame ()
 visualisierung(data)

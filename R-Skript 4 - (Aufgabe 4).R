@@ -80,9 +80,9 @@ metrisch.dichotom(l,m)
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
 function (create.quantil)
-  q <- Datensatz$Interesse_Programmieren
-create.quantil(q)
-create.quantil(q,0,1/2)
+#  q <- Datensatz$Interesse_Programmieren
+create.quantil(I_Program)
+create.quantil(I_Program,0,1/2)
 
 ## (Funktion f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt.

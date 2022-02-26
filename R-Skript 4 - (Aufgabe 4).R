@@ -70,10 +70,11 @@ bi.kategoriell(Fach, Mathe_LK)       # Statistik einziges Fach weniger Mathe_LK 
 
 # funktion d aufzurufen
 function(metrisch.dichotom)
-  m <- c(Datensatz$Interesse_Programmieren)
-l <- 
+ 
+  m <-c(I_Mathe)
+  l <-c(Mathe_LK)
   
-  metrisch.dichotom(l, m)
+  metrisch.dichotom(l,m)
 
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")

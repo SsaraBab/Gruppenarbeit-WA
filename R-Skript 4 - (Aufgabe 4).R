@@ -92,3 +92,11 @@ visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm 
 
 data <- data.frame (cat1 = c(Fach))
 visualisierung(data)
+
+I_Prog_Quantil <- create.quantil(I_Program)
+data <- data.frame (cat1 = c(I_Prog_Quantil))
+visualisierung(data)
+
+I_Prog_Quantil2 <- create.quantil(I_Program,0,1/2)
+data <- data.frame (cat1 = c(I_Prog_Quantil2))
+visualisierung(data)

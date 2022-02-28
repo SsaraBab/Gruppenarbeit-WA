@@ -209,7 +209,6 @@ visual.multi.kategoriell3(a, b, c, main = "Balkendiagramm von a, b und c")
 
 ## (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier kategorialen Variablen erstellt.
 
-#   
 visualisierung <- function(data) { ## Funktion zum Visualisieren und Zeichnen von Diagrammen
   library(ggplot2) ## Hinzufügen einer Bibliothek zum Zeichnen eines Diagramms
   ggplot(data, aes(x=reorder(cat1, cat1, function(x)-length(x)))) + geom_bar(fill='red') +  labs(x='cat1') ## Verwendung von ggplot, um ein Diagramm nach Kategorie mit roter Farbe und dem Titel "cat1" zu zeichnen

@@ -72,9 +72,13 @@ m <-c(I_Mathe)
 l <-c(Mathe_LK)
 
 metrisch.dichotom(l,m)
+
+# Bei einige Personen funktioniert diese automatisch nicht. Wenn das der fall ist, bitte erst grafik.metrisch.dichotom (Zeile 214) in Funktionen-R-Skript1.R ausfuehren
 grafik.metrisch.dichotom(l,m, main = "Boxplots von Interesse an Mathe, getrennt nach Leistungskurs")
 
 metrisch.dichotom(l,n)
+
+# Bei einige Personen funktioniert diese automatisch nicht. Wenn das der fall ist, bitte erst grafik.metrisch.dichotom (Zeile 214) in Funktionen-R-Skript1.R ausfuehren
 grafik.metrisch.dichotom(l,n, main = "Boxplots von Interesse an Programmierung, getrennt nach Leistungskurs")
 
 
@@ -97,10 +101,16 @@ I_Prog_Quantil2 <- create.quantil(I_Program,0,1/2)
 visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm von Faechern, Programmierung und Mathe")
 
 data <- data.frame (cat1 = c(Fach))
+
+# Bei einige Personen funktioniert diese automatisch nicht. Wenn das der fall ist, bitte erst visualisierung (Zeile 202) in Funktionen-R-Skript1.R ausfuehren
 visualisierung(data)
 
 data <- data.frame (cat1 = c(I_Prog_Quantil))
+
+# Bei einige Personen funktioniert diese automatisch nicht. Wenn das der fall ist, bitte erst visualisierung (Zeile 202) in Funktionen-R-Skript1.R ausfuehren
 visualisierung(data)
 
 data <- data.frame (cat1 = c(I_Prog_Quantil2))
+
+# Bei einige Personen funktioniert diese automatisch nicht. Wenn das der fall ist, bitte erst visualisierung (Zeile 202) in Funktionen-R-Skript1.R ausfuehren
 visualisierung(data)

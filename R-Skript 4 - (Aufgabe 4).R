@@ -9,10 +9,8 @@
 
 # Import Dateien
 
-# Install R Packages "Tidyverse"
-
+# Install R Packages
 library(tidyverse)
-
 library(readr)
 
 Datensatz <- read_csv("Datensatz.csv")

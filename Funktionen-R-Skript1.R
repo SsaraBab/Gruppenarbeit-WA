@@ -126,36 +126,36 @@ create.quantil(q,0,1/2)
 
 ## WICHTIG: bei Fehlermeldung bitte vor Ausfuehren Plotfenster gross ziehen
 visual.multi.kategoriell3 <- function(x, y, z, d = NULL, main = NULL,
-                                      label1 = NULL, ## label1 ist der Name der 1. Variable
-                                                     ## fuer die Beschriftung in der Grafik fuer
-                                                     ## 4 Variablen
-                                                     ## siehe Beispiel
-                                      label2 = NULL, ## label2 ist der Name der 2. Variable
-                                      label3 = NULL, ## label3 ist der Name der 3. Variable
+                                      label1 = NULL,      ## label1 ist der Name der 1. Variable
+                                                          ## fuer die Beschriftung in der Grafik fuer
+                                                          ## 4 Variablen
+                                                          ## siehe Beispiel
+                                      label2 = NULL,      ## label2 ist der Name der 2. Variable
+                                      label3 = NULL,      ## label3 ist der Name der 3. Variable
                                       label4 = NULL,...){ ## label4 ist der Name der 4. Variable
   ## zunaechst Kontrolle, dass alle Variablen die gleiche Laenge haben
   if(length(x)!= length(y) | length(y) != length(z) | length(x) != length(z))
     return("Die Variablen muessen die gleiche Laenge haben.")
-  if(is.null(d) == TRUE){     ## Funktion fuer 3 kategorielle Variablen
-    library(ggplot2)          ## lade noetige Pakete 
+  if(is.null(d) == TRUE){      ## Funktion fuer 3 kategorielle Variablen
+    library(ggplot2)           ## lade noetige Pakete 
     library(ggpubr)
     theme_set(theme_pubr())
-    df <- data.frame(x, y, z) ## erstelle data.frame aus Variablen
+    df <- data.frame(x, y, z)  ## erstelle data.frame aus Variablen
     Ergebnis <- ggplot(df, aes(x = x, y = y), ...)+ ## plotte die Grafik mit ggplot
       geom_bar( ## Balkendiagramme proportional zur Anzahl in Gruppe
         aes(fill = z), stat = "identity", color = "white", ##aesthetic mappings
         position = position_dodge(0.9)
       )+
-      facet_wrap(~z) +        ## 1-dimensionale Abfolge von Panels in 2-d verwandeln
-      fill_palette("jco") +   ## Palette fuer das Ausfuellen waehlen
-      ggtitle(main) +         ## Diagramm-Titel hinzufuegen
+      facet_wrap(~z) +         ## 1-dimensionale Abfolge von Panels in 2-d verwandeln
+      fill_palette("jco") +    ## Palette fuer das Ausfuellen waehlen
+      ggtitle(main) +          ## Diagramm-Titel hinzufuegen
       theme(plot.title = element_text(hjust = 0.5)) ## Titel zentrieren
-    return(Ergebnis)          ## Ergebnis ausgeben
+    return(Ergebnis)           ## Ergebnis ausgeben
      }
-  if(is.null(d) == FALSE){    ## nun Funktion fuer 4 kategorielle Variablen
+  if(is.null(d) == FALSE){     ## nun Funktion fuer 4 kategorielle Variablen
     opar <- par(mfrow = c(4,4), oma = c(1,1,4,1)) ## par setzen: 4 Grafiken in 1, aeusseren Rand
     ## mit Platz fuer Titel
-    plot.new()                ## neues Plot-Fenster oeffnen
+    plot.new()                 ## neues Plot-Fenster oeffnen
     plot.window(xlim = c(0,5), ylim = c(0,5)) ## Grenzen vom Plotfenster festlegen
     text(x = 2.5, y = 2.5, labels = label1)   ## Diagonale enthaelt Beschriftungen der Variablen
     barplot(prop.table(table(x,y),2))         ## Balkendiagramme der rel. Haeufigk. von je 2 Variablen

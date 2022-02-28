@@ -69,8 +69,6 @@ bi.kategoriell(Fach, Mathe_LK)       # Statistik einziges Fach weniger Mathe_LK 
 ## dichotomen Variablen berechnet und ausgibt
 
 # funktion d aufzurufen
-
-  
 m <-c(I_Mathe)
 l <-c(Mathe_LK)
 
@@ -81,14 +79,12 @@ metrisch.dichotom(l,m)
 # Funktion a aufzurufen
 
 create.quantil(I_Program)
-
 create.quantil(I_Program,0,1/2)
 
 ## (Funktion f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
 ## kategorialen Variablen erstellt.
 
 # funktion f aufzurufen
-
 I_Prog_Kat <- create.quantil(I_Program)
 I_Mathe_Kat <- create.quantil(I_Mathe)
 

@@ -209,7 +209,6 @@ data <- data.frame(cat1 = c("eins", "zwei", "drei", "vier","eins","funf","eins",
 visualisierung(data)
 
 ## freiwillig: weitere zur Deskription und Visualisierung geeignete Funktionen
-
 ## Boxplots fuer eine metrische Variable nach einer dichotomen Variable
 
 grafik.metrisch.dichotom <- function(x, y,...){ ## Funktion fuer 1 metrische, 1 dichotome Variable

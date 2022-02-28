@@ -9,10 +9,8 @@
 
 # Import Dateien
 
-# Install R Packages "Tidyverse"
-
+# Install R Packages
 library(tidyverse)
-
 library(readr)
 
 Datensatz <- read_csv("Datensatz.csv")
@@ -69,8 +67,6 @@ bi.kategoriell(Fach, Mathe_LK)       # Statistik einziges Fach weniger Mathe_LK 
 ## dichotomen Variablen berechnet und ausgibt
 
 # funktion d aufzurufen
-
-  
 m <-c(I_Mathe)
 l <-c(Mathe_LK)
 
@@ -80,7 +76,6 @@ metrisch.dichotom(l,m)
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")
 # Funktion a aufzurufen
 
-
 create.quantil(I_Program)
 create.quantil(I_Program,0,1/2)
 
@@ -88,7 +83,6 @@ create.quantil(I_Program,0,1/2)
 ## kategorialen Variablen erstellt.
 
 # funktion f aufzurufen
-
 I_Prog_Kat <- create.quantil(I_Program)
 I_Mathe_Kat <- create.quantil(I_Mathe)
 

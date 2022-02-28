@@ -93,7 +93,3 @@ function(visual.multi.kategoriell3)
   I_Mathe_Kat <- create.quantil(I_Mathe)
   
 visual.multi.kategoriell3(Fach, I_Prog_Kat, I_Mathe_Kat, main = "Balkendiagramm von Faechern, Programmierung und Mathe")
-  
-function(visualisierung)
-  data <- data.frame ()
-visualisierung(data)

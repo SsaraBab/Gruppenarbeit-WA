@@ -72,7 +72,11 @@ m <-c(I_Mathe)
 l <-c(Mathe_LK)
 
 metrisch.dichotom(l,m)
+grafik.metrisch.dichotom(l,m, main = "Boxplots von Interesse an Mathe, getrennt nach Leistungskurs")
+
 metrisch.dichotom(l,n)
+grafik.metrisch.dichotom(l,n, main = "Boxplots von Interesse an Programmierung, getrennt nach Leistungskurs")
+
 
 ## (Funktion e) Eine Funktion, die eine mindestens ordinal skalierte Variable
 ## quantilbasiert kategorisiert (z.B. in "niedrig", "mittel", "hoch")

@@ -152,8 +152,10 @@ visual.multi.kategoriell3 <- function(x, y, z, d = NULL, main = NULL,
       theme(plot.title = element_text(hjust = 0.5)) ## Titel zentrieren
     return(Ergebnis)           ## Ergebnis ausgeben
      }
-  if(is.null(d) == FALSE){     ## nun Funktion fuer 4 kategorielle Variablen
-    opar <- par(mfrow = c(4,4), oma = c(1,1,4,1)) ## par setzen: 4 Grafiken in 1, aeusseren Rand
+  if(is.null(d) == FALSE){
+    ## nun Funktion fuer 4 kategorielle Variablen
+    graphics.off()
+    opar <- par(mfrow = c(4,4), oma = c(1,1,4,1), mar=c(1, 1, 1, 1)) ## par setzen: 4 Grafiken in 1, aeusseren Rand
     ## mit Platz fuer Titel
     plot.new()                 ## neues Plot-Fenster oeffnen
     plot.window(xlim = c(0,5), ylim = c(0,5)) ## Grenzen vom Plotfenster festlegen
